@@ -1,5 +1,5 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PauseLayer.hpp>
+#include <Geode/modify/PauseLayer.hpp> // 511.50 285
 
 using namespace geode::prelude;
 
@@ -31,15 +31,26 @@ class $modify(BetterPauseLayer, PauseLayer) {
 
         this->addChild(presetMenu);
 
+        auto menuToggleBtnArea = CCMenu::create();
+        menuToggleBtnArea->setLayout(RowLayout::create());
+        this->addChild(menuToggleBtnArea);
+        menuToggleBtnArea->setPosition({511.50, 285});
+        menuToggleBtnArea->setContentSize({47, 47});
 
         auto rightMenu = getChildByID("right-button-menu");
 
-        auto menuBtn = CCMenuItemSpriteExtra::create(
+        auto menuToggleBtn = CCMenuItemSpriteExtra::create(
             CCSprite::createWithSpriteFrameName("GJ_plainBtn_001.png"),
             this,
             menu_selector(BetterPauseLayer::menuBtnClicked)
         );
-        rightMenu->addChild(menuBtn);
+
+        auto menuToggleBtnTxt = CCLabelBMFont::create("Presets", "bigFont.fnt");
+        menuToggleBtn->addChild(menuToggleBtnTxt);
+        menuToggleBtnTxt->setPosition(menuToggleBtn->getContentSize().width / 2, menuToggleBtn->getContentSize().height / 2);
+        menuToggleBtnTxt->setScale(0.275);
+
+        menuToggleBtnArea->addChild(menuToggleBtn);
 
         auto presetMenuBG = CCSprite::create("BPL_background_001.png"_spr);
         presetMenu->addChild(presetMenuBG);
@@ -106,7 +117,10 @@ class $modify(BetterPauseLayer, PauseLayer) {
 
         setCenterPos(this, posType);
 
+        menuToggleBtnArea->updateLayout();
+
         presetMenu->setZOrder(999999);
+        menuToggleBtnArea->setZOrder(1000000);
         m_fields->presetMenu = presetMenu;
     }
 
