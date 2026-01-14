@@ -33,7 +33,7 @@ inline void setCenterPos(
     }
 
     else if (type == 2) {
-        auto leftButtonMenu = parent->getChildByID("left-button-menu");
+        auto leftButtonMenu = static_cast<CCMenu*>(parent->getChildByID("left-button-menu"));
 
         auto children = centerMenu->getChildrenExt();
         for (int i = children.size() - 1; i >= 0; i--) {
@@ -42,6 +42,8 @@ inline void setCenterPos(
             leftButtonMenu->addChild(child);
         }
 
-        leftButtonMenu->updateLayout();
+        leftButtonMenu->setContentWidth(56);
+
+        leftButtonMenu->updateLayout(); // To avoid bug
     }
 }
