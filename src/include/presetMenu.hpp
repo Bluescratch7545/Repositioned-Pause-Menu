@@ -4,17 +4,15 @@
 
 using namespace geode::prelude;
 
-#include "./publicVars.hpp"
-
-class BetterPauseLayer;
+#include "publicVars.hpp"
+#include "position.hpp"
 
 class PresetMenu : public geode::Popup {
 protected:
     
 
-    bool init(CCObject* layer) {
+    bool init(CCObject* m_bpl) {
         if (!Popup::init(winSize.width - 35.f, 289.f, "GJ_square02.png")) return false;
-        CCObject* m_bpl = layer;
 
         this->setTitle("Presets Menu");
 
@@ -29,12 +27,12 @@ protected:
             menu_selector(PresetMenu::defaultPresetSelected)
         );
 
-        m_buttonMenu->addChildAtPosition(defaultPresetToggle, Anchor::TopLeft, {48.f, -41.f}); 
+        m_buttonMenu->addChildAtPosition(defaultPresetToggle, Anchor::TopLeft, {48.f, yOffset}); 
 
         auto defaultPresetText = CCLabelBMFont::create("Default", "bigFont.fnt");
 
         defaultPresetToggle->addChildAtPosition(defaultPresetText, Anchor::Center);
-        defaultPresetToggle->setScale(0.175);
+        defaultPresetToggle->setScale(0.175f);
         defaultPresetToggle->toggle(defaultToggleState);
 
         auto topPresetToggle = CCMenuItemToggler::create(
@@ -44,12 +42,12 @@ protected:
             menu_selector(PresetMenu::topPresetSelected)
         );
 
-        m_buttonMenu->addChildAtPosition(topPresetToggle, Anchor::TopLeft, {100.5f, -41.f});
+        m_buttonMenu->addChildAtPosition(topPresetToggle, Anchor::TopLeft, {100.5f, yOffset});
 
         auto topPresetText = CCLabelBMFont::create("Top", "bigFont.fnt");
 
         topPresetToggle->addChildAtPosition(topPresetText, Anchor::Center);
-        topPresetToggle->setScale(0.175);
+        topPresetToggle->setScale(0.175f);
         topPresetToggle->toggle(topToggleState);
 
         auto leftPresetToggle = CCMenuItemToggler::create(
@@ -59,16 +57,43 @@ protected:
             menu_selector(PresetMenu::leftPresetSelected)
         );
 
-        m_buttonMenu->addChildAtPosition(leftPresetToggle, Anchor::TopLeft, {153.f, -41.f});
+        m_buttonMenu->addChildAtPosition(leftPresetToggle, Anchor::TopLeft, {153.f, yOffset});
 
         auto leftPresetText = CCLabelBMFont::create("Left", "bigFont.fnt");
 
         leftPresetToggle->addChildAtPosition(leftPresetText, Anchor::Center);
-        leftPresetToggle->setScale(0.175);
+        leftPresetToggle->setScale(0.175f);
         leftPresetToggle->toggle(leftToggleState);
 
-        leftPresetText->setPosition(leftPresetToggle->getContentWidth() / 2, leftPresetToggle->getContentHeight() / 2);
+        auto bottomPresetToggle = CCMenuItemToggler::create(
+            CCSprite::create("BPL_btnTextureOff_001.png"_spr),
+            CCSprite::create("BPL_btnTextureOn_001.png"_spr),
+            m_bpl,
+            menu_selector(PresetMenu::bottomPresetSelected)
+        );
 
+        m_buttonMenu->addChildAtPosition(bottomPresetToggle, Anchor::TopLeft, {203.5f, yOffset});
+
+        auto bottomPresetText = CCLabelBMFont::create("Bottom", "bigFont.fnt");
+
+        bottomPresetToggle->addChildAtPosition(bottomPresetText, Anchor::Center);
+        bottomPresetToggle->setScale(0.175);
+        bottomPresetToggle->toggle(bottomToggleState);
+
+        auto rightPresetToggle = CCMenuItemToggler::create(
+            CCSprite::create("BPL_btnTextureOff_001.png"_spr),
+            CCSprite::create("BPL_btnTextureOn_001.png"_spr),
+            m_bpl,
+            menu_selector(PresetMenu::rightPresetSelected)
+        );
+
+        m_buttonMenu->addChildAtPosition(rightPresetToggle, Anchor::TopLeft, {256.f, yOffset});
+
+        auto rightPresetText = CCLabelBMFont::create("Right", "bigFont.fnt");
+
+        rightPresetToggle->addChildAtPosition(rightPresetText, Anchor::Center);
+        rightPresetToggle->setScale(0.175f);
+        rightPresetToggle->toggle(rightToggleState);
 
         m_buttonMenu->updateLayout();
 
@@ -102,6 +127,23 @@ protected:
         }
     }
 
+    void bottomPresetSelected(CCObject* sender) {
+        bottomToggleState = !static_cast<CCMenuItemToggler*>(sender)->isToggled();
+        if (bottomToggleState) {
+            type = 3;
+            Mod::get()->setSavedValue("type", 3);
+            setCenterPos(this, 3);
+        }
+    }
+
+    void rightPresetSelected(CCObject* sender) {
+        rightToggleState = !static_cast<CCMenuItemToggler*>(sender)->isToggled();
+        if (rightToggleState) {
+            type = 4;
+            Mod::get()->setSavedValue("type", 4);
+            setCenterPos(this, 4);
+        }
+    }
 
 public:
     static PresetMenu* create(CCObject* layer) {
