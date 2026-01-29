@@ -15,6 +15,8 @@ class $modify(BetterPauseLayer, PauseLayer) {
 
         auto posType = Mod::get()->getSavedValue<int64_t>("type");
 
+        type = posType;
+
 
         auto winSize = CCDirector::sharedDirector()->getWinSize();
 
