@@ -8,7 +8,7 @@
 	},
 	"id": "bluescratch.better_pauselayer",
 	"name": "Repositioned Pause Menu",
-	"version": "v1.0.0-beta.1",
+	"version": "v1.0.0-beta.2",
 	"developer": "Bluescratch",
 	"description": "Adds presets for repositioning the pause menu",
 	"dependencies": {
