@@ -10,7 +10,7 @@
 	"name": "Repositioned Pause Menu",
 	"version": "v1.0.0-beta.1",
 	"developer": "Bluescratch",
-	"description": "",
+	"description": "Adds presets for repositioning the pause menu",
 	"dependencies": {
 		"geode.node-ids": {
 			"importance": "required",
