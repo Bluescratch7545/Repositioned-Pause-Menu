@@ -10,6 +10,7 @@ using namespace geode::prelude;
 
 
 class $modify(BetterPauseLayer, PauseLayer) {
+    
     void customSetup() {
         PauseLayer::customSetup();
 
